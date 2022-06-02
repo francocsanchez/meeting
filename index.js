@@ -12,6 +12,12 @@ app.set('views', path.join(__dirname,'./views'))
 
 app.use(express.static('public'));
 
+// TODO: Variables globales
+app.use((req,res,next) => {
+    const fecha = new Date();
+    res.locals.year = fecha.getFullYear();
+    next();
+})
 app.use('/',routers())
 
 app.listen(process.env.PORT, () => {

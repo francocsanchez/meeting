@@ -12,6 +12,28 @@
     <title>Document</title>
 </head>
 <body>
+
+    <header class="site-header contenedor">
+        <a href="/">
+            <img src="/img/logo.png" alt="Logo Meeti">
+        </a>
+
+        <nav class="nav">
+            <a href="#">Crear Grupo</a>
+            <a href="#">Iniciar sesion</a>
+            <a href="#">Registrarse</a>
+        </nav>
+    </header>
     <%- body %>
+
+    <footer class="site-footer contenedor">
+        <nav class="nav">
+            <a href="#">Crear Grupo</a>
+            <a href="#">Iniciar sesion</a>
+            <a href="#">Registrarse</a>
+        </nav>
+
+        <p class="copyright">Todos los derechos reservados Meeti <%- locals.year %> &copy;</p>
+    </footer>
 </body>
 </html>
