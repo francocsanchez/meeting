@@ -6,7 +6,10 @@ const userController = require('../controllers/userController');
 
 module.exports = function () {
     router.get('/', homeController.home);
+
+    // TODO: Rutas de usuario
     router.get('/user/sing-up', userController.formSingUp);
+    router.post('/user/sing-up', userController.singUp);
 
     return router;
 }

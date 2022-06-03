@@ -1,8 +1,10 @@
 const express = require('express');
 const path = require('path');
-const routers = require('./routers')
+const routers = require('./routers');
+const bodyParser = require('body-parser');
 const expressLayout = require('express-ejs-layouts');
 
+// TODO: Conect BD
 const db = require('./config/db');
 require('./models/Users');
 db.sync().then(() => console.log('DB conectada')).catch((error) => console.log(error));
@@ -10,6 +12,8 @@ db.sync().then(() => console.log('DB conectada')).catch((error) => console.log(e
 require('dotenv').config({ path: 'variables.env' });
 
 const app = express();
+app.use(bodyParser.json());
+app.use(bodyParser.urlencoded({ extends: true }))
 
 app.use(expressLayout);
 app.set('view engine', 'ejs');
