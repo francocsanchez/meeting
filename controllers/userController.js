@@ -1,4 +1,4 @@
-const User = require('../models/Users');
+const Users = require('../models/Users');
 const enviarEmail = require('../handlers/emails');
 const { validationResult } = require('express-validator');
 
@@ -20,9 +20,9 @@ exports.singUp = async (req, res) => {
         });
     }
 
-    await User.create(user);
+    await Users.create(user);
 
-    const url = `http://${req.headers.host}/confir-acount/${user.email}`;
+    const url = `http://${req.headers.host}/user/${user.email}/confirm-account`;
 
     await enviarEmail.enviarEmail({
         user,
@@ -40,4 +40,20 @@ exports.logIn = (req, res) => {
     res.render('./user/formLogIn', {
         nombrePagina: 'Iniciar sesion'
     })
+}
+
+exports.confirmAccount = async (req, res, next) => {
+    const user = await Users.findOne({ where: { email: req.params.email } })
+
+    if (!user) {
+        req.flash('error', 'La cuenta no existe');
+        res.redirect('/user/sing-up');
+        return next();
+    }
+
+    user.status = 1;
+    await user.save()
+
+    req.flash('exito', 'Cuenta activada correctamente');
+    res.redirect('/user/log-in');
 }

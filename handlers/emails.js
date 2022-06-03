@@ -13,6 +13,7 @@ var transport = nodemailer.createTransport({
     }
 });
 
+// TODO: Envio de emails
 exports.enviarEmail = async (options) => {
 
     // leer el archivo para el mail

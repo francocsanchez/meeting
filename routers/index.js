@@ -30,6 +30,7 @@ module.exports = function () {
     router.get('/user/sing-up', userController.formSingUp);
     router.post('/user/sing-up', validationUserCreate, userController.singUp);
     router.get('/user/log-in', userController.logIn);
+    router.get('/user/:email/confirm-account', userController.confirmAccount);
 
     return router;
 }
