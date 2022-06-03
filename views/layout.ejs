@@ -25,22 +25,33 @@
 
         <nav class="nav">
             <a href="#">Crear Grupo</a>
-            <a href="#">Iniciar sesion</a>
+            <a href="/user/log-in">Iniciar sesion</a>
             <a href="/user/sing-up">Registrarse</a>
         </nav>
     </header>
+    
+    <% if (locals.mensajes) { %>
+        <% const categoria = Object.keys(locals.mensajes) %>
+        <% if(categoria.length) { %>
+             <% locals.mensajes[categoria].forEach(alerta => {  %>
+                 <div class="alertas">
+                    <p class="alerta <%= categoria %>"> <%= alerta %></p>
+                 </div>
+             <% }) %>
+        <% } %>
+     <% } %>
 
     <%- body %>
 
-        <footer class="site-footer contenedor">
-            <nav class="nav">
-                <a href="#">Crear Grupo</a>
-                <a href="#">Iniciar sesion</a>
-                <a href="#">Registrarse</a>
-            </nav>
+    <footer class="site-footer contenedor">
+        <nav class="nav">
+            <a href="#">Crear Grupo</a>
+            <a href="/user/log-in">Iniciar sesion</a>
+            <a href="/user/sing-up">Registrarse</a>
+        </nav>
 
-            <p class="copyright">Todos los derechos reservados Meeti <%- locals.year %> &copy;</p>
-        </footer>
+        <p class="copyright">Todos los derechos reservados Meeti <%- locals.year %> &copy;</p>
+    </footer>
 </body>
 
 </html>
