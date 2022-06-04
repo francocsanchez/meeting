@@ -6,6 +6,7 @@ const router = express.Router();
 const homeController = require('../controllers/homeController');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
+const adminController = require('../controllers/adminController');
 
 // TODO: Validaciones de usuarios
 const validationUserCreate = [
@@ -30,9 +31,12 @@ module.exports = function () {
     // TODO: Rutas de usuario
     router.get('/user/sing-up', userController.formSingUp);
     router.post('/user/sing-up', validationUserCreate, userController.singUp);
-    router.get('/user/log-in', userController.logIn);
     router.get('/user/:email/confirm-account', userController.confirmAccount);
+    router.get('/user/log-in', userController.logIn);
     router.post('/user/log-in', authController.logIn);
+
+    // TODO: Rutas de administracion
+    router.get('/user/admin/panel', adminController.panel);
 
     return router;
 }
