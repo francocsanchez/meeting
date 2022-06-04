@@ -7,6 +7,7 @@ const homeController = require('../controllers/homeController');
 const userController = require('../controllers/userController');
 const authController = require('../controllers/authController');
 const adminController = require('../controllers/adminController');
+const groupController = require('../controllers/groupController');
 
 // TODO: Validaciones de usuarios
 const validationUserCreate = [
@@ -37,6 +38,8 @@ module.exports = function () {
 
     // TODO: Rutas de administracion
     router.get('/user/admin/panel', adminController.panel);
+    router.get('/user/admin/panel/new-group', groupController.formNewGroup);
+    router.post('/user/admin/panel/new-group', groupController.newGroup);
 
     return router;
 }
