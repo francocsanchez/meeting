@@ -4,6 +4,7 @@ const routers = require('./routers');
 const bodyParser = require('body-parser');
 const flash = require('connect-flash');
 const session = require('express-session');
+const passport = require('./config/passport');
 const cookieParser = require('cookie-parser');
 const expressLayout = require('express-ejs-layouts');
 
@@ -30,6 +31,9 @@ app.use(session({
     resave: false,
     saveUninitialized: false
 }))
+
+app.use(passport.initialize());
+app.use(passport.session());
 
 app.use(flash());
 app.use((req, res, next) => {
