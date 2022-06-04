@@ -12,6 +12,7 @@ const expressLayout = require('express-ejs-layouts');
 const db = require('./config/db');
 require('./models/Users');
 require('./models/Categories');
+require('./models/Groups');
 db.sync().then(() => console.log('DB conectada')).catch((error) => console.log(error));
 
 require('dotenv').config({ path: 'variables.env' });
