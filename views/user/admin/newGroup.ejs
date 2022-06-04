@@ -19,6 +19,11 @@
             <label for="">Categoria</label>
             <select name="category" id="">
                 <option value="" selected disabled>-- Elige una categoria --</option>
+                <% categories.forEach(category=> { %>
+                    <option value="<%= category.id %>">
+                        <%= category.name %>
+                    </option>
+                <% }); %>
             </select>
         </div>
         <div class="campo">

@@ -11,6 +11,7 @@ const expressLayout = require('express-ejs-layouts');
 // TODO: Conect BD
 const db = require('./config/db');
 require('./models/Users');
+require('./models/Categories');
 db.sync().then(() => console.log('DB conectada')).catch((error) => console.log(error));
 
 require('dotenv').config({ path: 'variables.env' });
