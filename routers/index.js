@@ -26,6 +26,12 @@ const validationUserCreate = [
     }),
 ];
 
+const validationGroupCreate = [
+    body('name').notEmpty().withMessage('El nombre no debe estar vacío'),
+    body('description').notEmpty().withMessage('La descripcion no debe estar vacío'),
+    body('categoryId').notEmpty().withMessage('Debe seleccionar una categoria'),
+];
+
 module.exports = function () {
     router.get('/', homeController.home);
 
@@ -39,7 +45,7 @@ module.exports = function () {
     // TODO: Rutas de administracion
     router.get('/user/admin/panel', adminController.panel);
     router.get('/user/admin/panel/new-group', groupController.formNewGroup);
-    router.post('/user/admin/panel/new-group', groupController.newGroup);
+    router.post('/user/admin/panel/new-group', validationGroupCreate, groupController.newGroup);
 
     return router;
 }

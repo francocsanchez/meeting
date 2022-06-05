@@ -5,7 +5,7 @@ const Categories = db.define('categories', {
     id: {
         type: Sequelize.INTEGER,
         primaryKey: true,
-        autoIncrement: true
+        autoIncrement: true,
     },
     name: Sequelize.TEXT
 })

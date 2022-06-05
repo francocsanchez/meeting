@@ -3,7 +3,7 @@
         <%= nombrePagina %>
     </h1>
 
-    <form action="" class="default-form" method="post">
+    <form action="/user/admin/panel/new-group" class="default-form" method="post">
         <div class="campo">
             <label for="">Nombre</label>
             <input type="text" name="name" placeholder="Nuevo grupo">
@@ -17,10 +17,10 @@
         </div>
         <div class="campo">
             <label for="">Categoria</label>
-            <select name="category" id="">
-                <option value="" selected disabled>-- Elige una categoria --</option>
+            <select name="categoryId">
+                <option selected disabled>-- Elige una categoria --</option>
                 <% categories.forEach(category=> { %>
-                    <option value="<%= category.id %>">
+                    <option value=<%= category.id %>>
                         <%= category.name %>
                     </option>
                 <% }); %>

@@ -4,35 +4,36 @@ const uuid = require('uuid');
 const Categories = require('./Categories');
 const Users = require('./Users');
 
-const Grups = db.define('grups', {
+const Groups = db.define('groups', {
     id: {
         type: Sequelize.UUID,
+        defaultValue: Sequelize.UUIDV4,
         primaryKey: true,
-        allowNull: false
-    }, 
+        allowNull: false,
+    },
     name: {
-        type: Sequelize.TEXT, 
-        allowNull: false, 
+        type: Sequelize.TEXT,
+        allowNull: false,
         validate: {
             notEmpty: {
-                msg : 'El grupo debe tener un nombre'
+                msg: 'El grupo debe tener un nombre'
             }
         }
-    }, 
+    },
     description: {
         type: Sequelize.TEXT,
-        allowNull: false, 
-        validate : {
+        allowNull: false,
+        validate: {
             notEmpty: {
                 msg: 'Coloca una descripción'
             }
         }
     },
-    url: Sequelize.TEXT, 
+    url: Sequelize.TEXT,
     img: Sequelize.TEXT
 })
 
-Grups.belongsTo(Categories);
-Grups.belongsTo(Users);
+Groups.belongsTo(Categories);
+Groups.belongsTo(Users);
 
-module.exports = Grups;
+module.exports = Groups;
