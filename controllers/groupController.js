@@ -1,6 +1,53 @@
 const Categories = require('../models/Categories');
 const Groups = require('../models/Groups');
+const shortid = require('shortid');
+const multer = require('multer');
+const fs = require('fs');
 const { validationResult } = require('express-validator');
+
+const configMulter = {
+    fileFilter(req, file, next) {
+        if (file.mimetype === 'image/jpeg' || file.mimetype === 'image/png') {
+            //el formato es valido
+            next(null, true);
+        } else {
+            // el formato no es valido
+            next(new Error('Formato no válido'), false);
+        }
+    }
+}
+
+const storage = multer.diskStorage({
+    destination: (req, file, cb) => {
+        cb(null, __dirname + '/../public/img/upload/groups')
+    },
+    filename: (req, file, cb) => {
+        const newFileName = `groups-${shortid.generate()}.${file.mimetype.split('/')[1]}`;
+        cb(null, newFileName)
+    }
+})
+
+const upload = multer({ limits: { fileSize: 100000 }, configMulter, storage }).single('img');
+
+exports.uploadImg = (req, res, next) => {
+    upload(req, res, function (error) {
+        if (error) {
+            if (error instanceof multer.MulterError) {
+                if (error.code === 'LIMIT_FILE_SIZE') {
+                    req.flash('error', 'El archivo es muy grande')
+                } else {
+                    req.flash('error', error.message);
+                }
+            } else if (error.hasOwnProperty('message')) {
+                req.flash('error', error.message);
+            }
+            res.redirect('back');
+            return;
+        } else {
+            next();
+        }
+    })
+}
 
 exports.formNewGroup = async (req, res) => {
     const categories = await Categories.findAll();
@@ -11,12 +58,11 @@ exports.formNewGroup = async (req, res) => {
     });
 }
 
-
 exports.newGroup = async (req, res) => {
     const validation = validationResult(req);
-    const group = req.body;
 
     if (validation.errors.length > 0) {
+        !req.file ? null : fs.unlinkSync(req.file.path);
         const categories = await Categories.findAll();
         req.flash('error', validation.errors.map(error => error.msg));
         return res.render('./user/admin/newGroup', {
@@ -25,8 +71,12 @@ exports.newGroup = async (req, res) => {
             mensajes: req.flash()
         });
     }
-    group.userId = 1
 
+    const group = req.body;
+    group.userId = 1;
+    !req.file ? group.img = '' : group.img = req.file.filename;
+
+    // TODO: Eliminar, remplazar fila de codigo por req.user.id
     await Groups.create(group);
 
     req.flash('exito', 'Grupo creado correctamente');
