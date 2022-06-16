@@ -55,28 +55,24 @@
 
     <div class="seccion-admin">
         <h2>Tus grupos</h2>
-        <ul>
-            <li>
-                <div class="informacion-admin">
-                    <h3>Carreras</h3>
-                </div>
-                <div class="acciones-contenedor">
-                    <a href="#" class="btn btn-verde">Editar</a>
-                    <a href="#" class="btn btn-azul2">Imagen</a>
-                    <a href="#" class="btn btn-rojo">Eliminar</a>
-                </div>
-            </li>
-            <li>
-                <div class="informacion-admin">
-                    <h3>Programacion</h3>
-                </div>
-                <div class="acciones-contenedor">
-                    <a href="#" class="btn btn-verde">Editar</a>
-                    <a href="#" class="btn btn-azul2">Imagen</a>
-                    <a href="#" class="btn btn-rojo">Eliminar</a>
-                </div>
-            </li>
-        </ul>
+        <% if(groups.length) { %> 
+            <ul>
+                <% groups.forEach(group=> { %>
+                    <li>
+                        <div class="informacion-admin">
+                            <h3><%= group.name %> </h3>
+                        </div>
+                        <div class="acciones-contenedor">
+                            <a href="/user/edit-group/<%= group.id %>" class="btn btn-verde">Editar</a>
+                            <a href="/user/edit-group-img/<%= group.id %>" class="btn btn-azul2">Imagen</a>
+                            <a href="/user/delete-group/<%= group.id %>" class="btn btn-rojo">Eliminar</a>
+                        </div>
+                    </li>
+                <% }); %>
+            </ul>
+        <% } else { %>
+            <p>No tienes grupos creados</p>
+        <% }  %>
     </div>
 
 </main>
