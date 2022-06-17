@@ -47,5 +47,9 @@ module.exports = function () {
     router.get('/user/admin/panel/new-group', groupController.formNewGroup);
     router.post('/user/admin/panel/new-group', groupController.uploadImg, validationGroupCreate, groupController.newGroup);
 
+    // TODO: Rutas de grupos
+    router.get('/groups/edit-group/:id', groupController.formEditGroup);
+    router.post('/groups/edit-group/:id', groupController.editGroup);
+
     return router;
 }

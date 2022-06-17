@@ -82,3 +82,44 @@ exports.newGroup = async (req, res) => {
     req.flash('exito', 'Grupo creado correctamente');
     res.redirect('/user/admin/panel');
 }
+
+exports.formEditGroup = async (req, res) => {
+    const query = [];
+    query.push(Groups.findByPk(req.params.id));
+    query.push(Categories.findAll());
+
+    const [group, categories] = await Promise.all(query);
+
+    res.render('./user/admin/editGroup', {
+        nombrePagina: `Editar grupo - ${group.name}`,
+        group,
+        categories
+    });
+}
+
+exports.editGroup = async (req, res, next) => {
+    const group = await Groups.findOne(
+        {
+            where: {
+                id: req.params.id,
+                userId: 1
+            }
+        })
+
+    if (!group) {
+        req.flash('error', 'Operacion no valida!');
+        res.redirect('/user/admin/panel');
+        return next();
+    }
+
+    const { name, description, categoryId, url } = req.body
+
+    group.name = name;
+    group.description = description;
+    group.categoryId = categoryId;
+    group.url = url;
+    group.save();
+
+    req.flash('exito', 'Grupo actualizado correctamente')
+    res.redirect('/user/admin/panel');
+}
