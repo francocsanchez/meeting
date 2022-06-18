@@ -172,7 +172,7 @@ exports.updateImgGroup = async (req, res, next) => {
     res.redirect('/user/admin/panel');
 }
 
-exports.formDeleteGroups = async (req, res) => {
+exports.formDeleteGroups = async (req, res, next) => {
     const group = await Groups.findOne(
         {
             where: {
@@ -192,7 +192,7 @@ exports.formDeleteGroups = async (req, res) => {
     });
 }
 
-exports.deleteGroup = async (req, res) => {
+exports.deleteGroup = async (req, res, next) => {
     const group = await Groups.findOne(
         {
             where: {
