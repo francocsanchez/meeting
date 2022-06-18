@@ -52,6 +52,8 @@ module.exports = function () {
     router.post('/groups/edit-group/:id', groupController.editGroup);
     router.get('/groups/edit-group-img/:id', groupController.formImgGroup);
     router.post('/groups/edit-group-img/:id', groupController.uploadImg, groupController.updateImgGroup);
+    router.get('/groups/delete-group/:id', groupController.formDeleteGroups);
+    router.post('/groups/delete-group/:id', groupController.deleteGroup);
 
     return router;
 }
