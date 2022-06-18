@@ -50,6 +50,8 @@ module.exports = function () {
     // TODO: Rutas de grupos
     router.get('/groups/edit-group/:id', groupController.formEditGroup);
     router.post('/groups/edit-group/:id', groupController.editGroup);
+    router.get('/groups/edit-group-img/:id', groupController.formImgGroup);
+    router.post('/groups/edit-group-img/:id', groupController.uploadImg, groupController.updateImgGroup);
 
     return router;
 }

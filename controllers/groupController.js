@@ -123,3 +123,51 @@ exports.editGroup = async (req, res, next) => {
     req.flash('exito', 'Grupo actualizado correctamente')
     res.redirect('/user/admin/panel');
 }
+
+exports.formImgGroup = async (req, res) => {
+    const group = await Groups.findOne(
+        {
+            where: {
+                id: req.params.id,
+                userId: 1
+            }
+        })
+
+    res.render('./user/admin/imgGroup', {
+        nombrePagina: `Editando la imagen del grupo - ${group.name}`,
+        group
+    })
+}
+
+exports.updateImgGroup = async (req, res, next) => {
+    const group = await Groups.findOne(
+        {
+            where: {
+                id: req.params.id,
+                userId: 1
+            }
+        })
+
+    if (!group) {
+        req.flash('error', 'Operacion no valida!');
+        res.redirect('/user/log-in');
+        return next();
+    }
+
+    if (req.file && group.img) {
+        const imgAnt = __dirname + `/../public/img/upload/groups/${group.img}`;
+
+        fs.unlink(imgAnt, (error) => {
+            if (error) { console.log(error); }
+
+            return;
+        })
+    }
+
+    if (req.file) { group.img = req.file.filename; }
+
+    await group.save();
+
+    req.flash('exito', 'Imagen actualizada correctamente');
+    res.redirect('/user/admin/panel');
+}
